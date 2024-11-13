@@ -3,5 +3,5 @@ __all__ = (
 	"faces_trainer",
 )
 
-import detector as faces_detector
+import detecting as faces_detector
 import trainer as faces_trainer

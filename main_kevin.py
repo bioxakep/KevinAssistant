@@ -2,17 +2,11 @@ import subprocess
 import sys
 import time
 import webbrowser
-import psutil
-import webrtcvad
 from ollama_bot import OllamaBot
+from utils import kill_process_by_name
 from voices import VoiceRecognizer, VoiceGenerator, VoiceRecorder
-from config import voice_config
-
-
-def kill_process_by_name(name: str):
-    for process in psutil.process_iter():
-        if process.name() == name:
-            process.kill()
+from faces import faces_detector
+from config import voice_config, faces_config
 
 
 def run_kevin():
@@ -55,6 +49,16 @@ def run_kevin():
             subprocess.call(['open', '-a', 'Terminal'])
         elif 'закрой терминал' in command_text:
             kill_process_by_name(name='Terminal')
+
+
+def run_kevin_video():
+    fd = faces_detector.FaceDetector(camera_number=faces_config.camera_number)
+    users_list = []
+
+    while True:
+        user_id = fd.face_monitoring()
+
+    pass
 
 
 if __name__ == '__main__':
