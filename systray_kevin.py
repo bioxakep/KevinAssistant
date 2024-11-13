@@ -5,9 +5,9 @@ import webbrowser
 import rumps
 
 from config import voice_config
-from kevin import kill_process_by_name
+from main_kevin import kill_process_by_name
 from ollama_bot import OllamaBot
-from voice_engines import VoiceRecorder, VoiceRecognizer, VoiceGenerator
+from voices import VoiceRecorder, VoiceRecognizer, VoiceGenerator
 
 
 class KevinApp(rumps.App):

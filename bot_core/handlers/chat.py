@@ -9,7 +9,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import FSInputFile
 
 from ollama_bot import OllamaBot
-from voice_engines import VoiceRecognizer, VoiceGenerator
+from voices import VoiceRecognizer, VoiceGenerator
 from config import voice_config
 
 chat_router = Router()

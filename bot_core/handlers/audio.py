@@ -8,7 +8,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import FSInputFile
 
-from voice_engines import VoiceRecognizer, VoiceGenerator
+from voices import VoiceRecognizer, VoiceGenerator
 from config import voice_config
 
 audio_router = Router()

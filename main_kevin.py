@@ -5,7 +5,7 @@ import webbrowser
 import psutil
 import webrtcvad
 from ollama_bot import OllamaBot
-from voice_engines import VoiceRecognizer, VoiceGenerator, VoiceRecorder
+from voices import VoiceRecognizer, VoiceGenerator, VoiceRecorder
 from config import voice_config
 
 
@@ -35,7 +35,7 @@ def run_kevin():
         time.sleep(2)
         if ollama_mode:
             response = smart_bot.ask(command_text)
-            # print('Ответ бота: ', response)
+            print('Ответ бота: ', response)
             vgr.say_text(response)
             ollama_mode = False
             continue
@@ -59,3 +59,4 @@ def run_kevin():
 
 if __name__ == '__main__':
     run_kevin()
+    # subprocess.call(['open', '-a', 'Safari', '-n'])
