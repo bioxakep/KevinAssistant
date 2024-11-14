@@ -5,7 +5,7 @@ import webbrowser
 from ollama_bot import OllamaBot
 from utils import kill_process_by_name, humanize_time
 from voices import VoiceRecognizer, VoiceGenerator, VoiceRecorder
-from faces import faces_detecting
+from faces import FaceDetector, key_pressed
 from config import voice_config, faces_config
 from collections import deque, Counter
 from utils import read_labels
@@ -66,7 +66,7 @@ def run_kevin_video():
     vgr = VoiceGenerator(voice=VoiceGenerator.VOICE_RU_MALE)
     vcr = VoiceRecorder()
     vrz = VoiceRecognizer(model_path=voice_config.small_ru_model)
-    fd = faces_detecting.FaceDetector(camera_number=faces_config.camera_number, detect_interval=1)
+    fd = FaceDetector(camera_number=faces_config.camera_number, detect_interval=1)
     olm = OllamaBot()
     cam_users_list = deque(maxlen=face_detect_param)
     while len(cam_users_list) < face_detect_param:
@@ -74,7 +74,7 @@ def run_kevin_video():
         cam_users_list.appendleft(cam_user_id)
     vgr.say_text("Добро пожаловать, Кевин готов к работе.")
     while True:
-        if faces_detecting.key_pressed('q'):
+        if key_pressed('q'):
             break
         # Получаем аудиозапись команды
         command_audio = vcr.get_audio_command(timeout=0.2)
