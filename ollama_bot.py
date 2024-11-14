@@ -25,9 +25,4 @@ class OllamaBot:
 
 
 if __name__ == '__main__':
-	# run_models()
 	bot = OllamaBot()
-	print(bot.ask('Сколько лет Байдену?'))
-
-
-
