@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
-from bot_core.handlers import auth, common, audio, chat
+from tg_bot.handlers import auth, common, audio, chat
 from config import bot_config
 
 logging.basicConfig(level=logging.INFO)

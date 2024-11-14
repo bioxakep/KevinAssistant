@@ -1,7 +1,7 @@
 from aiogram import Router, types, F
 from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
-from bot_core.kbrds import auth_kb
+from tg_bot.kbrds import auth_kb
 
 weather_router = Router()
 
