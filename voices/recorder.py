@@ -44,7 +44,7 @@ class VoiceRecorder:
 		del stream
 		return volume_deque
 
-	def get_audio_command(self):
+	def get_audio_command(self, timeout: float = 1):
 		frames = bytearray()
 		stream = self.init_stream()
 		frame = stream.read(VoiceRecorder.CHUNK)
@@ -54,7 +54,7 @@ class VoiceRecorder:
 		while volume < 2 * self.max_volume:
 			frame = stream.read(VoiceRecorder.CHUNK)
 			volume = audioop.rms(frame, VoiceRecorder.SAMPLE_WIDTH)
-			if time.perf_counter() - start_wait > 5:
+			if time.perf_counter() - start_wait > timeout:
 				recorder_logger.info('- не дождался команды')
 				return frames
 		recorder_logger.info('- записываю команду')

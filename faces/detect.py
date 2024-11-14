@@ -7,10 +7,17 @@ from config import faces_config
 from utils import read_labels
 
 
+def key_pressed(key: str):
+	if cv2.waitKey(1) & 0xFF == ord(key):
+		return True
+	return False
+
+
 class FaceDetector:
 	def __init__(
 			self,
 			camera_number: int = 0,
+			detect_interval: int = 1,
 	):
 		self._cap = cv2.VideoCapture(camera_number)
 		haar_path: str = os.path.join(faces_config.assets_path, str(faces_config.haarcascade_file_name))
@@ -22,22 +29,23 @@ class FaceDetector:
 		self._recognizer.read(model_file_path)
 
 		self._users_ids = read_labels()
+		self.__detect_interval = detect_interval
 
-		self.__users_window = []
-
-	def face_monitoring(self):
-		# Ждем лицо, если появляется, то вносим его в массив [1 0 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0]
+	def face_monitoring(self, show: bool = False):
 		ret, frame = self._cap.read()
 		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		faces = self._fc.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5, minSize=(100, 100))
+		if show:
+			cv2.imshow("Пользователь", frame)
 		for (x, y, w, h) in faces:
 			user_id, confidence = self._recognizer.predict(gray[y:y + h, x:x + w])
-			if confidence < 50 and user_id in self._users_ids.keys():
-				self._cap.release()
-				# cv2.destroyAllWindows()
-			yield user_id
-			break
-		yield 0
+			if confidence < 50 and str(user_id) in self._users_ids.keys():
+				return user_id
+		return 0
+
+	def stop_monitoring(self):
+		self._cap.release()
+		cv2.destroyAllWindows()
 
 	def wait_face(self, face_name: str, timeout=10):
 		if face_name not in self._users_ids.values():
@@ -83,6 +91,7 @@ def detect_faces():
 	recognizer.read(model_file_path)
 
 	users_ids = read_labels()
+	print(users_ids)
 	# if name is not None:
 	# 	users_ids = {k: v for k, v in users_ids.items() if name in v}
 	while True:
@@ -92,7 +101,7 @@ def detect_faces():
 		for (x, y, w, h) in faces:
 			user_id, confidence = recognizer.predict(gray[y:y + h, x:x + w])
 			if confidence < 50:
-				cv2.putText(frame, users_ids[str(user_id)], (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+				cv2.putText(frame, str(user_id), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 				cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 		cv2.imshow('Recognize Faces', frame)
 		if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -100,3 +109,7 @@ def detect_faces():
 	# Release the camera and close windows
 	cap.release()
 	cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+	detect_faces()

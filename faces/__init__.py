@@ -1,7 +1,7 @@
 __all__ = (
-	"faces_detector",
-	"faces_trainer",
+	"faces_detecting",
+	"faces_training",
 )
 
-import detecting as faces_detector
-import trainer as faces_trainer
+import faces.detect as faces_detecting
+import faces.train as faces_training
