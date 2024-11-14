@@ -8,10 +8,6 @@ class OllamaBot:
 	SMART_MODEL = 'llama3.1:latest'
 
 	def __init__(self, model=None):
-		import psutil
-		# for p in psutil.process_iter(['pid', 'name']):
-		# 	if 'ollama' in p.info['name']:
-		# 		p.kill()
 		self.__ollama_service = subprocess.Popen(['/usr/local/bin/ollama', 'serve'], stdout=subprocess.PIPE)
 		self.__client = Client()
 
