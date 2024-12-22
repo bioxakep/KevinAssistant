@@ -14,7 +14,7 @@ class VoiceRecognizer:
 		self.__recognizer = KaldiRecognizer(self.__model, VoiceRecognizer.FREQ)
 		# AudioSegment.converter = '/opt/homebrew/Cellar/ffmpeg/7.0_1/bin/ffmpeg'
 
-	def recognize_from_tg(self, ogg_file_path: str):
+	def recognize_ogg(self, ogg_file_path: str):
 		voice_wav_path = os.path.join(
 			voice_config.audio_files,
 			os.path.basename(ogg_file_path.replace('.ogg', '.wav'))

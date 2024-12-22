@@ -6,7 +6,7 @@ from ollama_bot import OllamaBot
 from utils import kill_process_by_name, humanize_time
 from voices import VoiceRecognizer, VoiceGenerator, VoiceRecorder
 from faces import FaceDetector, key_pressed
-from config import voice_config, faces_config
+from config import voice_config, faces_config, ollama_config
 from collections import deque, Counter
 from utils import read_labels
 
@@ -15,7 +15,7 @@ def run_kevin():
     # vad = webrtcvad.Vad()
     # vad.set_mode(3)
     ollama_mode = False
-    smart_bot = OllamaBot()
+    smart_bot = OllamaBot(ollama_config.binary_path, model=OllamaBot.SMART_MODEL)
     vcr = VoiceRecorder()
     vrz = VoiceRecognizer(model_path=voice_config.small_ru_model)
     vgr = VoiceGenerator(voice=VoiceGenerator.VOICE_RU_MALE)
@@ -67,7 +67,7 @@ def run_kevin_video():
     vcr = VoiceRecorder()
     vrz = VoiceRecognizer(model_path=voice_config.small_ru_model)
     fd = FaceDetector(camera_number=faces_config.camera_number, detect_interval=1)
-    olm = OllamaBot()
+    olm = OllamaBot(ollama_config.binary_path, model=OllamaBot.SMART_MODEL)
     cam_users_list = deque(maxlen=face_detect_param)
     while len(cam_users_list) < face_detect_param:
         cam_user_id = fd.face_monitoring()

@@ -1,22 +1,7 @@
 from aiogram import Router, types, F
 from aiogram.filters.command import Command
-from aiogram.fsm.context import FSMContext
-from tg_bot.kbrds import auth_kb
 
 common_router = Router()
-
-
-@common_router.message(Command("start"))  # /start
-async def cmd_start(message: types.Message):
-    await message.answer("Бот умеет преобразовывать текст в речь и обратно. "
-                         "Ткните /help для получения подробной информации.")
-    # await message.answer("Привет! Зарегистрируемся?", reply_markup=auth_kb.get_auth_kb())
-
-
-@common_router.message(Command("help"))  # /start
-async def cmd_help(message: types.Message):
-    await message.answer("/voice [ТЕКСТ] - преобразует текст в речь, в ответ вы получите аудиофайл.\n"
-                         "/text - команда для преобразования аудиозаписи в текст.")
 
 
 @common_router.message(Command("id"))  # /id

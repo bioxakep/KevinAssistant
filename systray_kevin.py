@@ -4,7 +4,7 @@ import webbrowser
 
 import rumps
 
-from config import voice_config
+from config import voice_config, ollama_config
 from main_kevin import kill_process_by_name
 from ollama_bot import OllamaBot
 from voices import VoiceRecorder, VoiceRecognizer, VoiceGenerator
@@ -16,7 +16,7 @@ class KevinApp(rumps.App):
 		kevin_item = rumps.MenuItem(title="Run Kevin", callback=self.run_kevin, icon="assets/micro.png")
 		self.menu = [kevin_item, "Option 2", "Option 3"]
 		self.icon = "assets/kevin.png"
-		self.__smart_bot = OllamaBot()
+		self.__smart_bot = OllamaBot(ollama_config.binary_path)
 		self.__vcr = VoiceRecorder()
 		self.__vrz = VoiceRecognizer(model_path=voice_config.small_ru_model)
 		self.__vgr = VoiceGenerator(voice=VoiceGenerator.VOICE_RU_MALE)
